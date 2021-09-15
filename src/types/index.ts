@@ -6,5 +6,7 @@ export {
     HTTP401Error,
     HTTP404Error,
     HTTP422Error,
-    HTTP500Error
+    HTTP500Error,
 }
+
+export * from './theme';
