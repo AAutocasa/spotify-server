@@ -7,6 +7,8 @@ export class DeviceClassService {
         private deviceClassDB: DeviceClassDBManager,
         private maxClassDuration: number) { }
 
+    private _observers: ((classes: DeviceClass[]) => void)[] = [];
+
     async GetActiveDeviceClasses(): Promise<DeviceClassHeartbeat[]> {
         const classes = await this.deviceClassDB.GetDeviceClasses();
         const now = Date.now();
@@ -20,11 +22,16 @@ export class DeviceClassService {
         return activeClasses;
     }
 
-    UpdateDeviceClassHeartbeat(deviceClass: DeviceClass): void {
+    async UpdateDeviceClassHeartbeat(deviceClass: DeviceClass): Promise<void> {
         const now = Date.now();
 
         const heartbeat = Object.assign(deviceClass, { lastUpdateTimestamp:  now})
-        this.deviceClassDB.UpdateDeviceClass(heartbeat);
+        const existedBefore = await this.deviceClassDB.UpdateDeviceClass(heartbeat);
+
+        // TODO: Check if the class is new. If so, emit something to observers
+        if (!existedBefore) {
+            this.NotifyObservers();
+        }
     }
 
     async RemoveOlderActiveDeviceClasses(): Promise<void> {
@@ -35,4 +42,14 @@ export class DeviceClassService {
             
         this.deviceClassDB.RemoveDeviceClasses(oldClasses);
     }
+
+    async SubscribeToNewDevices(callback: (classes: DeviceClass[]) => void): Promise<void> {
+        this._observers.push(callback);
+    }
+
+    async NotifyObservers(): Promise<void> {
+        const classes = await this.deviceClassDB.GetDeviceClasses();
+        this._observers.forEach(observer => observer(classes));
+    }
 }
+
