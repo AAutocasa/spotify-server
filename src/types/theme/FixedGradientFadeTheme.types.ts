@@ -9,9 +9,10 @@ export type FixedGradientSavedTheme = SavedTheme & {
     metadata: FixedGradientSavedThemeMetadata;
 }
 
-export const buildFixedGradientBaseTheme: () => BaseTheme = () => {
+export const FixedGradientBaseThemeID = 'fixed-gradient';
+export const BuildFixedGradientBaseTheme: () => BaseTheme = () => {
     return <BaseTheme>{
-        id: 'fixed-gradient',
+        id: FixedGradientBaseThemeID,
         name: 'Fixed Gradient',
         description: 'The simplest gradient you will ever know',
         uiStructure: {
@@ -31,7 +32,7 @@ export const buildFixedGradientBaseTheme: () => BaseTheme = () => {
     }
 };
 
-export const processSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme /* variations: DeviceVariation[], data: SongData */): number /* ProcessedSong */ => {
+export const ProcessSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme /* variations: DeviceVariation[], data: SongData */): number /* ProcessedSong */ => {
 
     return 2;
     return 1;

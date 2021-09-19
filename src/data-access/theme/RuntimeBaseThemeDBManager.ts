@@ -1,7 +1,11 @@
-import { BaseTheme, BaseThemeDBManager } from '../../types';
+import { BaseTheme, BaseThemeDBManager, FixedGradientBaseThemeID, BuildFixedGradientBaseTheme } from '../../types';
 
-export class RuntimeThemeDBManager implements BaseThemeDBManager {
+export class RuntimeBaseThemeDBManager implements BaseThemeDBManager {
     readonly prefix = `[RuntimeThemeDBManager]`;
+
+    constructor() {
+        this._themes[FixedGradientBaseThemeID] = BuildFixedGradientBaseTheme();
+    }
 
     private _themes: { [themeId: string]: BaseTheme } = {};
 

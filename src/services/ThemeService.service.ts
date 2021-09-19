@@ -1,4 +1,4 @@
-import { SavedTheme, BaseThemeDBManager, SavedThemeDBManager } from "../types";
+import { SavedTheme, BaseThemeDBManager, SavedThemeDBManager, BaseTheme } from "../types";
 
 export class ThemeService {
     readonly prefix = `[ThemeService]`;
@@ -8,6 +8,11 @@ export class ThemeService {
         private baseThemeDB: BaseThemeDBManager) { }
     
     private _observers: ((theme: SavedTheme) => void)[] = [];
+
+    async GetAllBaseThemes(): Promise<BaseTheme[]> {
+        const themes = await this.baseThemeDB.GetBaseThemes();
+        return themes;
+    } 
 
     async SubscribeToNewActiveTheme(callback: (theme: SavedTheme) => void): Promise<void> {
         this._observers.push(callback);

@@ -3,6 +3,10 @@ import dotenv from 'dotenv'
 
 import { MQTTManager, MQTTRouter, MQTTDefaultPublisherDelegate } from './mqtt';
 import { AuthMiddleware, LoggerMiddleware } from './middlewares';
+import { ThemeService } from './services';
+import { FileSavedThemeDBManager, RuntimeBaseThemeDBManager } from './data-access';
+
+import { ThemeRouter } from './routes';
 
 dotenv.config();
 
@@ -22,8 +26,13 @@ app.use('/', router);
 const publisher = new MQTTDefaultPublisherDelegate()
 
 // Services setup
+const savedThemeDBManager = new FileSavedThemeDBManager('./data/saved_themes.json');
+const baseThemeDBManager = new RuntimeBaseThemeDBManager();
+
+const themeSvc = new ThemeService(savedThemeDBManager, baseThemeDBManager);
 
 // HTTP Routes setup
+ThemeRouter(router, themeSvc);
 
 // FirmwareRouter(router, firmwareSvc);
 
