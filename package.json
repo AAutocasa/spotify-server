@@ -7,12 +7,14 @@
   "dependencies": {
     "@types/mqtt": "^2.5.0",
     "@types/node": "^14.14.37",
+    "@types/uuid": "^8.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fs-extra": "^9.1.0",
     "moment": "^2.29.1",
     "mqtt": "^4.2.6",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",

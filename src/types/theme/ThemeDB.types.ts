@@ -6,8 +6,9 @@ export interface BaseThemeDBManager {
 }
 
 export interface SavedThemeDBManager {
-    UpdateSavedTheme(theme: SavedTheme): void;
-    RemoveSavedTheme(themeId: string): void;
+    UpdateSavedTheme(theme: SavedTheme): Promise<void>;
+    RemoveSavedTheme(themeId: string): Promise<void>;
 
     GetSavedThemes(): Promise<SavedTheme[]>;
+    GetSavedTheme(themeId: string): Promise<SavedTheme | undefined>;
 }

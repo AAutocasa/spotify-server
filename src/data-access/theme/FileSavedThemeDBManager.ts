@@ -34,12 +34,12 @@ export class FileSavedThemeDBManager implements SavedThemeDBManager {
         })
     }
 
-    UpdateSavedTheme(theme: SavedTheme): void {
+    async UpdateSavedTheme(theme: SavedTheme): Promise<void> {
         this._themes[theme.id] = theme;
         this.PersistDB();
     }
 
-    RemoveSavedTheme(themeId: string): void {
+    async RemoveSavedTheme(themeId: string): Promise<void> {
         delete this._themes[themeId];
         this.PersistDB();
     }
@@ -47,6 +47,12 @@ export class FileSavedThemeDBManager implements SavedThemeDBManager {
     GetSavedThemes(): Promise<SavedTheme[]> {
         return new Promise((resolve, reject) => {
             resolve(Object.values(this._themes));
+        });
+    }
+
+    GetSavedTheme(themeId: string): Promise<SavedTheme | undefined> {
+        return new Promise((resolve, reject) => {
+            resolve(Object.values(this._themes).find(t => t.id == themeId));
         });
     }
 }
