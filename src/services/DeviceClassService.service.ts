@@ -47,7 +47,7 @@ export class DeviceClassService {
         this._observers.push(callback);
     }
 
-    async NotifyObservers(): Promise<void> {
+    private async NotifyObservers(): Promise<void> {
         const classes = await this.deviceClassDB.GetDeviceClasses();
         this._observers.forEach(observer => observer(classes));
     }
