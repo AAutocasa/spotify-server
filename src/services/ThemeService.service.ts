@@ -17,7 +17,7 @@ export class ThemeService {
 
     async SaveTheme(theme: SaveThemeRequest): Promise<boolean> {
         const id = uuidv4();
-        const themeWithID = Object.assign(theme, { id });
+        const themeWithID = Object.assign(theme, { id: id });
 
         await this.savedThemeDB.UpdateSavedTheme(themeWithID);
 

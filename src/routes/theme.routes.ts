@@ -45,7 +45,7 @@ export const ThemeRouter = (router: Router, themeSvc: ThemeService): void => {
     })
 
 
-    router.delete('/saved-theme/:themeId', async (req: Request, res: Response) => {
+    router.delete('/saved-themes/:themeId', async (req: Request, res: Response) => {
         console.log(`${prefix} [DELETE] '/saved-theme' called...`);
         try {
             const id = req.params["themeId"];

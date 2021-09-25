@@ -1,4 +1,5 @@
 import { SavedTheme, SavedThemeDBManager } from '../../types';
+import path from 'path';
 import fse from 'fs-extra';
 
 
@@ -6,6 +7,11 @@ export class FileSavedThemeDBManager implements SavedThemeDBManager {
     readonly prefix = `[FileSavedThemeDBManager]`;
 
     constructor(private filePath: string) {
+        const dirname = path.dirname(filePath);
+        if (!fse.existsSync(dirname)){
+            fse.mkdirSync(dirname, { recursive: true });
+        }
+
         this.ReadDB();
     }
 
@@ -18,7 +24,7 @@ export class FileSavedThemeDBManager implements SavedThemeDBManager {
             if (err) { 
                 console.log(`${prefix} ReadDB error: ${err}. Creating file...!`);
                 this.PersistDB();
-                console.log(`${prefix} Created file!`);
+                console.log(`${prefix} Tried to created file!`);
             }
             this._themes = data || {};
         })
