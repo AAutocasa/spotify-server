@@ -1,4 +1,4 @@
-import { BaseTheme, SavedTheme} from '.';
+import { BaseTheme, SavedTheme, ThemeProcessingFunction} from '.';
 
 export interface BaseThemeDBManager {
     GetBaseThemes(): Promise<BaseTheme[]>;
@@ -11,4 +11,8 @@ export interface SavedThemeDBManager {
 
     GetSavedThemes(): Promise<SavedTheme[]>;
     GetSavedTheme(themeId: string): Promise<SavedTheme | undefined>;
+}
+
+export interface ThemeToFunctionMap {
+    GetFunctionForTheme(baseThemeId: string): ThemeProcessingFunction | undefined;
 }

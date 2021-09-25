@@ -1,6 +1,6 @@
-import { ThemeUIElementType, ThemeUIElement, ThemeUINumber, ThemeUIColorPicker, ThemeUIStructure, BaseTheme, SavedTheme } from './Theme.types';
-import { FixedGradientSavedThemeMetadata, FixedGradientSavedTheme, FixedGradientBaseThemeID, BuildFixedGradientBaseTheme } from './FixedGradientFadeTheme.types';
-import { BaseThemeDBManager, SavedThemeDBManager } from './ThemeDB.types';
+import { ThemeUIElementType, ThemeUIElement, ThemeUINumber, ThemeUIColorPicker, ThemeUIStructure, BaseTheme, SavedTheme, ExecutableTheme, ThemeProcessingFunction } from './Theme.types';
+import { FixedGradientSavedThemeMetadata, FixedGradientSavedTheme, FixedGradientBaseThemeID, BuildFixedGradientBaseTheme, ProcessSongDataUsingFixedGradientTheme } from './FixedGradientFadeTheme.types';
+import { BaseThemeDBManager, SavedThemeDBManager, ThemeToFunctionMap } from './ThemeDB.types';
 import { SaveThemeRequest, ActivateSavedThemeRequest, SetActiveThemeRequest } from './ThemeRoutes.types';
 
 export {
@@ -13,6 +13,9 @@ export {
     ThemeUIStructure,
     BaseTheme,
     SavedTheme,
+    ExecutableTheme,
+
+    ThemeProcessingFunction,
 
     BaseThemeDBManager,
     SavedThemeDBManager,
@@ -21,9 +24,12 @@ export {
     ActivateSavedThemeRequest,
     SetActiveThemeRequest,
 
+    ThemeToFunctionMap,
+
     // THEMES
     FixedGradientSavedThemeMetadata,
     FixedGradientSavedTheme,
     FixedGradientBaseThemeID,
-    BuildFixedGradientBaseTheme
+    BuildFixedGradientBaseTheme,
+    ProcessSongDataUsingFixedGradientTheme,
 }

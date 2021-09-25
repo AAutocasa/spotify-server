@@ -1,11 +1,11 @@
-import { SavedTheme } from "../types";
+import { ExecutableTheme, SavedTheme } from "../types";
 import { DeviceClassService } from "./";
 import { ThemeService } from './ThemeService.service';
 
 export class MagicService {
     readonly prefix = `[MagicService]`;
 
-    constructor(private defaultTheme: SavedTheme,
+    constructor(private defaultTheme: ExecutableTheme,
         private deviceClassSvc: DeviceClassService,
         private themeSvc: ThemeService) {
         // TODO: Start a background thread to send stuff to the MQTT every X seconds
@@ -28,8 +28,8 @@ export class MagicService {
         return this._activeTheme || this.defaultTheme;
     }
 
-    SetActiveTheme(savedTheme: SavedTheme): void {
-        this._activeTheme = savedTheme;
+    SetActiveTheme(executableTheme: ExecutableTheme): void {
+        this._activeTheme = executableTheme;
 
         // TODO: Use song + savedTheme data to process it
     }

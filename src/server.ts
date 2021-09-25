@@ -3,10 +3,10 @@ import dotenv from 'dotenv'
 
 import { MQTTManager, MQTTRouter, MQTTDefaultPublisherDelegate } from './mqtt';
 import { AuthMiddleware, LoggerMiddleware } from './middlewares';
-import { ThemeService } from './services';
-import { FileSavedThemeDBManager, RuntimeBaseThemeDBManager } from './data-access';
+import { DeviceClassService, ThemeService } from './services';
+import { FileDeviceClassDBManager, FileSavedThemeDBManager, RuntimeBaseThemeDBManager, RuntimeThemeToFunctionMap } from './data-access';
 
-import { ThemeRouter } from './routes';
+import { ThemeRouter, DeviceClassMQTTRouter } from './routes';
 
 dotenv.config();
 
@@ -28,16 +28,20 @@ const publisher = new MQTTDefaultPublisherDelegate()
 // Services setup
 const savedThemeDBManager = new FileSavedThemeDBManager('./data/saved_themes.json');
 const baseThemeDBManager = new RuntimeBaseThemeDBManager();
+const themeToFunctionMap = new RuntimeThemeToFunctionMap();
 
-const themeSvc = new ThemeService(savedThemeDBManager, baseThemeDBManager);
+const themeSvc = new ThemeService(savedThemeDBManager, baseThemeDBManager, themeToFunctionMap);
+
+const deviceClassDBManager = new FileDeviceClassDBManager('./data/device_class.json');
+
+const deviceClassSvc = new DeviceClassService(deviceClassDBManager, 60 * 60 * 1_000);
 
 // HTTP Routes setup
 ThemeRouter(router, themeSvc);
 
-// FirmwareRouter(router, firmwareSvc);
-
 // MQTT Routes setup
 const mqttRouter = new MQTTRouter();
+DeviceClassMQTTRouter(mqttRouter, deviceClassSvc)
 
 // MQTT setup
 const mqttManager = new MQTTManager(mqttRouter,

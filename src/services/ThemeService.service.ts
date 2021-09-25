@@ -1,4 +1,4 @@
-import { SavedTheme, BaseThemeDBManager, SavedThemeDBManager, BaseTheme, SaveThemeRequest } from "../types";
+import { SavedTheme, BaseThemeDBManager, SavedThemeDBManager, BaseTheme, SaveThemeRequest, ThemeToFunctionMap, ExecutableTheme } from "../types";
 import { v4 as uuidv4 } from 'uuid';
 
 export class ThemeService {
@@ -6,9 +6,10 @@ export class ThemeService {
 
     constructor(
         private savedThemeDB: SavedThemeDBManager,
-        private baseThemeDB: BaseThemeDBManager) { }
+        private baseThemeDB: BaseThemeDBManager,
+        private themeToFunctionMap: ThemeToFunctionMap) { }
     
-    private _observers: ((theme: SavedTheme) => void)[] = [];
+    private _observers: ((theme: ExecutableTheme) => void)[] = [];
 
     async GetAllBaseThemes(): Promise<BaseTheme[]> {
         const themes = await this.baseThemeDB.GetBaseThemes();
@@ -42,19 +43,24 @@ export class ThemeService {
         return false;
     }
 
-
     async ActivateTheme(savedTheme: SavedTheme): Promise<boolean> {
-        // TODO: Merge with the function for this theme
-        // Send to the subscribe structure
+        const processingFunction = this.themeToFunctionMap.GetFunctionForTheme(savedTheme.baseThemeId);
+
+        if (!processingFunction) {
+            return false;
+        }
+
+        const executableTheme = Object.assign(savedTheme, { processingFunction });
+        this.NotifyObservers(executableTheme);
 
         return true;
     }
 
-    async SubscribeToNewActiveTheme(callback: (theme: SavedTheme) => void): Promise<void> {
+    async SubscribeToNewActiveTheme(callback: (theme: ExecutableTheme) => void): Promise<void> {
         this._observers.push(callback);
     }
 
-    private async NotifyObservers(activeTheme: SavedTheme): Promise<void> {
+    private async NotifyObservers(activeTheme: ExecutableTheme): Promise<void> {
         this._observers.forEach(observer => observer(activeTheme));
     }
 }

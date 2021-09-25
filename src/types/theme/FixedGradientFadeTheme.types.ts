@@ -32,8 +32,6 @@ export const BuildFixedGradientBaseTheme: () => BaseTheme = () => {
     }
 };
 
-export const ProcessSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme /* variations: DeviceVariation[], data: SongData */): number /* ProcessedSong */ => {
-
-    return 2;
-    return 1;
+export const ProcessSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme /* variations: DeviceVariation[], data: SongData */): void /* ProcessedSong */ => {
+    return
 };

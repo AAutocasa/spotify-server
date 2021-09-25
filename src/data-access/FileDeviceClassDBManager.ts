@@ -1,10 +1,16 @@
 import { DeviceClass, DeviceClassDBManager, DeviceClassHeartbeat } from "../types";
 import fse from 'fs-extra';
+import path from 'path';
 
 export class FileDeviceClassDBManager implements DeviceClassDBManager {
     readonly prefix = `[FileDeviceClassDBManager]`;
 
     constructor(private filePath: string) {
+        const dirname = path.dirname(filePath);
+        if (!fse.existsSync(dirname)){
+            fse.mkdirSync(dirname, { recursive: true });
+        }
+
         this.ReadDB();
     }
 

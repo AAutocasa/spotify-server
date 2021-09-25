@@ -32,3 +32,9 @@ export type SavedTheme = {
 
     metadata?: any;
 };
+
+export type ThemeProcessingFunction = (theme: any) => void;
+
+export type ExecutableTheme = SavedTheme & {
+    processingFunction: ThemeProcessingFunction;
+};
