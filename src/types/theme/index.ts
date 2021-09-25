@@ -1,7 +1,7 @@
 import { ThemeUIElementType, ThemeUIElement, ThemeUINumber, ThemeUIColorPicker, ThemeUIStructure, BaseTheme, SavedTheme } from './Theme.types';
 import { FixedGradientSavedThemeMetadata, FixedGradientSavedTheme, FixedGradientBaseThemeID, BuildFixedGradientBaseTheme } from './FixedGradientFadeTheme.types';
 import { BaseThemeDBManager, SavedThemeDBManager } from './ThemeDB.types';
-import { SaveThemeRequest, DeleteThemeRequest, ActivateSavedThemeRequest, SetActiveThemeRequest } from './ThemeRoutes.types';
+import { SaveThemeRequest, ActivateSavedThemeRequest, SetActiveThemeRequest } from './ThemeRoutes.types';
 
 export {
     ThemeUIElementType,
@@ -18,7 +18,6 @@ export {
     SavedThemeDBManager,
 
     SaveThemeRequest,
-    DeleteThemeRequest,
     ActivateSavedThemeRequest,
     SetActiveThemeRequest,
 

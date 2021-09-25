@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { ThemeService } from '../services';
-import { DeleteThemeRequest, BaseError, SaveThemeRequest, ActivateSavedThemeRequest, SetActiveThemeRequest } from "../types";
+import { BaseError, SaveThemeRequest, ActivateSavedThemeRequest, SetActiveThemeRequest } from "../types";
 import { v4 as uuidv4 } from 'uuid';
 
 export const ThemeRouter = (router: Router, themeSvc: ThemeService): void => {
@@ -45,11 +45,10 @@ export const ThemeRouter = (router: Router, themeSvc: ThemeService): void => {
     })
 
 
-    router.delete('/saved-theme', async (req: Request, res: Response) => {
+    router.delete('/saved-theme/:themeId', async (req: Request, res: Response) => {
         console.log(`${prefix} [DELETE] '/saved-theme' called...`);
         try {
-            const themeIdReq = <DeleteThemeRequest>req.body;
-            const id = themeIdReq.id;
+            const id = req.params["themeId"];
             
             const result = await themeSvc.RemoveSavedTheme(id);
 
