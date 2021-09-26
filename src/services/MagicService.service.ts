@@ -12,11 +12,13 @@ export class MagicService {
 
         // Subscribe to the DeviceClassService to get updates on new active themes
         deviceClassSvc.SubscribeToNewDevices(classes => {
+            console.log(`${this.prefix} [SubscribeToNewDevices] Device updated with classes: `, classes);
             // Do something with the classes
         })
 
         // Subscribe to the ThemeService to get updates on new active themes
         themeSvc.SubscribeToNewActiveTheme(activeTheme => {
+            console.log(`${this.prefix} [SubscribeToNewActiveTheme] New active theme: `, activeTheme);
             this.SetActiveTheme(activeTheme);
         })
     }

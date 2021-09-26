@@ -3,10 +3,11 @@ import dotenv from 'dotenv'
 
 import { MQTTManager, MQTTRouter, MQTTDefaultPublisherDelegate } from './mqtt';
 import { AuthMiddleware, LoggerMiddleware } from './middlewares';
-import { DeviceClassService, ThemeService } from './services';
+import { DeviceClassService, MagicService, ThemeService } from './services';
 import { FileDeviceClassDBManager, FileSavedThemeDBManager, RuntimeBaseThemeDBManager, RuntimeThemeToFunctionMap } from './data-access';
 
-import { ThemeRouter, DeviceClassMQTTRouter } from './routes';
+import { ThemeRouter, DeviceClassMQTTRouter, MagicRouter } from './routes';
+import { SampleFixedGradientExecutableTheme } from './types';
 
 dotenv.config();
 
@@ -36,8 +37,11 @@ const deviceClassDBManager = new FileDeviceClassDBManager('./data/device_class.j
 
 const deviceClassSvc = new DeviceClassService(deviceClassDBManager, 60 * 60 * 1_000);
 
+const magicSvc = new MagicService(SampleFixedGradientExecutableTheme, deviceClassSvc, themeSvc);
+
 // HTTP Routes setup
 ThemeRouter(router, themeSvc);
+MagicRouter(router, magicSvc);
 
 // MQTT Routes setup
 const mqttRouter = new MQTTRouter();

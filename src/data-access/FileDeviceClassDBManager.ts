@@ -45,10 +45,10 @@ export class FileDeviceClassDBManager implements DeviceClassDBManager {
 
     UpdateDeviceClass(deviceClassHeartbeat: DeviceClassHeartbeat): boolean {
         const key = this.DeviceClassToKey(deviceClassHeartbeat);
-
         const previousClass = this._deviceClassHeartbeats[key];
-
+        
         this._deviceClassHeartbeats[key] = deviceClassHeartbeat;
+
         this.PersistDB();
 
         return !!previousClass;

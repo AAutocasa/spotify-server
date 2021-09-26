@@ -28,7 +28,6 @@ export class DeviceClassService {
         const heartbeat = Object.assign(deviceClass, { lastUpdateTimestamp:  now})
         const existedBefore = await this.deviceClassDB.UpdateDeviceClass(heartbeat);
 
-        // TODO: Check if the class is new. If so, emit something to observers
         if (!existedBefore) {
             this.NotifyObservers();
         }
