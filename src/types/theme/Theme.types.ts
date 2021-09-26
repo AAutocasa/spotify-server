@@ -1,3 +1,5 @@
+import { DeviceClass } from "..";
+
 // Information regarding a theme 
 export enum ThemeUIElementType {
     NUMBER = 0,
@@ -33,7 +35,7 @@ export type SavedTheme = {
     metadata?: any;
 };
 
-export type ThemeProcessingFunction = (theme: any) => void;
+export type ThemeProcessingFunction = (theme: any, deviceClass: DeviceClass) => void;
 
 export type ExecutableTheme = SavedTheme & {
     processingFunction: ThemeProcessingFunction;

@@ -1,4 +1,5 @@
 import { SavedTheme, BaseTheme, ThemeUIElementType, ThemeUIColorPicker, ExecutableTheme } from '.';
+import { DeviceClass } from '../.';
 
 export type FixedGradientSavedThemeMetadata = {
     firstColorHex: string;
@@ -32,7 +33,7 @@ export const BuildFixedGradientBaseTheme: () => BaseTheme = () => {
     }
 };
 
-export const ProcessSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme /* variations: DeviceVariation[], data: SongData */): void /* ProcessedSong */ => {
+export const ProcessSongDataUsingFixedGradientTheme = (theme: FixedGradientSavedTheme, deviceClass: DeviceClass): void /* ProcessedSong */ => {
     return
 };
 

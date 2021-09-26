@@ -1,4 +1,4 @@
-import { ExecutableTheme, SavedTheme } from "../types";
+import { DeviceClass, ExecutableTheme, SavedTheme } from "../types";
 import { DeviceClassService } from "./";
 import { ThemeService } from './ThemeService.service';
 
@@ -13,7 +13,7 @@ export class MagicService {
         // Subscribe to the DeviceClassService to get updates on new active themes
         deviceClassSvc.SubscribeToNewDevices(classes => {
             console.log(`${this.prefix} [SubscribeToNewDevices] Device updated with classes: `, classes);
-            // Do something with the classes
+            this.SetDeviceClasses(classes);
         })
 
         // Subscribe to the ThemeService to get updates on new active themes
@@ -25,6 +25,7 @@ export class MagicService {
 
     // TODO: Something to store the processed segments by active device channel
     private _activeTheme?: SavedTheme;
+    private _classes: DeviceClass[] = [];
 
     private get activeTheme() {
         return this._activeTheme || this.defaultTheme;
@@ -32,6 +33,12 @@ export class MagicService {
 
     SetActiveTheme(executableTheme: ExecutableTheme): void {
         this._activeTheme = executableTheme;
+
+        // TODO: Use song + savedTheme data to process it
+    }
+
+    SetDeviceClasses(classes: DeviceClass[]): void {
+        this._classes = classes;
 
         // TODO: Use song + savedTheme data to process it
     }
